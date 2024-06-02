@@ -8,8 +8,8 @@ This is the website for tracking personal finances in different currencies: inco
 
 - For each transaction, users can add a payee AND a comment. The payee is like a dictionary entry indicating where you spent money, and the comment is a string to remember what you paid for.
 - Events: In every transaction, users can mention an event (for example, journey, birthday, wedding, etc.), so they can track how much they spend on the event in total.
-- Multiuser wallets. The app can maintain not only personal wallets but shared ones. For example, a family wallet, or a shared wallet for tracking how much a group of people spend on an event.
 - Multicurrency wallets. Each wallet can have transactions in many currencies; users can choose a base currency for a wallet. As the app contains exchange rates for currencies for each day, it can recalculate transactions in the base currency correctly by using the exchange rate from the day of the transaction, not today's rate.
+- Multiuser wallets. The app can maintain not only personal wallets but shared ones. For example, a family wallet, or a shared wallet for tracking how much a group of people spend on an event.
 - Categories are cross-wallets, so users can get accurate statistics from all their wallets.
 
 ## Entities

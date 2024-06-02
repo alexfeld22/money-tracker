@@ -16,8 +16,8 @@ interface Transaction {
     comment: string // for what you paid
     userUUID: string
     amount: number
-    paymentDistributionCurrent?: []PaymentDistribution
-    paymentDistributionDesired?: []PaymentDistribution
+    paymentDistributionCurrent?: PaymentDistribution[]
+    paymentDistributionDesired?: PaymentDistribution[]
     walletUUID: string
     eventUUID?: string
     date: string // stringified date
@@ -74,8 +74,8 @@ events {
 / transactions
 
 - create/read/update/delete {Transaction | uuid} (User)
-- searchTransactions {searchString, startDate, endDate, baseCurrency} (User)
-- getTransactionsGroupedByCategory {startDate, endDate, baseCurrency, category} (User)
+- searchTransactions {searchString, startDate, endDate, baseCurrency, category} (User)
+- getTransactionsGrouped {startDate, endDate, baseCurrency, aggField} (User)
 
 / wallets
 
