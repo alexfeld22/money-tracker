@@ -1,4 +1,4 @@
-import { ICategory } from "./../../types/category";
+// import { ICategory } from "./../../types/category";
 import { CategoryModel } from "./models";
 
 export const dbService = {

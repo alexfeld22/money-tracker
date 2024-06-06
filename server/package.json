@@ -7,14 +7,18 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start:dev": "NODE_ENV=development cross-env NODE_ENV=development tsx watch --clear-screen=false main.ts"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
+    "envalid": "^8.0.0",
     "mongoose": "^8.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/node": "^20.14.1",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
