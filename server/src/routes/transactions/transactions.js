@@ -3,8 +3,8 @@ const express = require('express');
 const moment = require('moment');
 const codes = require('http-status-codes');
 
-const app = express();
-app.use(express.json());
+const router = express.Router();
+router.use(express.json());
 
 consts = {
     userId: '90092e73-13a3-445c-8213-3d6576b2cb2e',
@@ -62,23 +62,19 @@ function validateTransaction(transaction){
     return schema.validate(transaction);
 }
 
-app.get('/', (req, res) => {
-    res.status(codes.StatusCodes.OK).send('OK');
-})
-
-app.get('/api/transactions/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     const transaction = transactions.find(t => t.id === req.params.id);
     if (!transaction) return res.status(codes.StatusCodes.NOT_FOUND).send('Transaction with given ID is not found');
     res.status(codes.StatusCodes.OK).send(transaction);
 });
 
-app.get('/api/transactions', (req, res) => {
+router.get('/', (req, res) => {
     // const transaction = transactions.find(t => t.id === req.params.id);
     // if (!transaction) return res.status(codes.StatusCodes.NOT_FOUND).send('Transaction with given ID is not found');
     res.status(codes.StatusCodes.OK).send(transactions);
 });
 
-app.post('/api/transactions', (req, res) => {
+router.post('/', (req, res) => {
 
     const transaction = transactions.find(t => t.id === req.body.id);
     if (transaction) return res.status(codes.StatusCodes.CONFLICT).send('Transaction already exists');
@@ -95,22 +91,23 @@ app.post('/api/transactions', (req, res) => {
 
 });
 
-app.put('/api/transactions/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     const transaction = transactions.find(t => t.id === req.params.id);
     if (!transaction) return res.status(codes.StatusCodes.NOT_FOUND).send('Transaction with given ID is not found');
     if (req.params.id !== req.body.id && req.body.id) res.status(codes.StatusCodes.BAD_REQUEST).send('Id in request header doesnt match id in request body');
 
-    const result = validateTransaction(req.body);
+    
     const { error } = validateTransaction(req.body);
     if (error) return res.status(codes.StatusCodes.BAD_REQUEST).send(error.details[0].message);
-
+    
+    const result = validateTransaction(req.body);
     const index = transactions.findIndex(t => t.id === req.params.id);
-    transactions[index] = transaction;
+    transactions[index] = result.value;
 
     res.status(codes.StatusCodes.OK).send(transactions[index]);
 });
 
-app.delete('/api/transactions/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     const index = transactions.findIndex(t => t.id === req.params.id);
     if (index === -1) return res.status(codes.StatusCodes.NOT_FOUND).send('Transaction with given ID is not found');
 
@@ -124,7 +121,4 @@ app.delete('/api/transactions/:id', (req, res) => {
 //     res.send(`dateFrom = ${moment(dateFrom).format()} and dateTo = ${moment(dateTo).format()}`);
 // })
 
-
-
-const port = process.env.PORT||3000; 
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+module.exports = router;
