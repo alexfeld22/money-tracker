@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express'
 const router = express.Router();
 const codes = require('http-status-codes');
 
 router.get('/', (req, res) => {
-    res.status(codes.StatusCodes.OK).send('OK');
+    res.status(codes.OK).send('OK');
 });
 
-module.exports = router;
+export default router;
