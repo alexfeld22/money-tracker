@@ -63,7 +63,7 @@ router.post("/", async (req, res) => {
       return res.status(codes.BAD_REQUEST).send(error.details[0].message);
 
     const result = validateTransaction(req.body);
-    const newTransaction = transactionService.createTransaction(req.body);
+    const newTransaction = await transactionService.createTransaction(req.body);
     console.log(newTransaction);
     res.status(codes.OK).send(newTransaction);
   } catch (error) {

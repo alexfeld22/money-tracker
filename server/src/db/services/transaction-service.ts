@@ -50,7 +50,7 @@ export const transactionService = {
     try {
       const transactionId = crypto.randomUUID();
       const transaction = new TransactionModel({...transactionData, transactionId: transactionId});
-      const result = transaction.save();
+      const result = await transaction.save();
       return result;
     } catch (err) {
       console.log("DB Error: ", err);
