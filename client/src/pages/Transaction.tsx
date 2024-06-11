@@ -39,7 +39,7 @@ function Transaction() {
     resolver: zodResolver(transactionSchema), // Pass Zod schema to resolver
     // defaultValues: specify default values for form inputs
     defaultValues: {
-      currency: "",
+      currency: "USD",
       amount: undefined,
       payee: undefined,
       comment: "",
