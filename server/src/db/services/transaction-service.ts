@@ -80,7 +80,6 @@ export const transactionService = {
     }
   },
   getSummaryForPeriod: async (
-    period: string,
     startDay: string,
     endDay: string,
     userId: string
