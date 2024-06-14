@@ -5,6 +5,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Typography from "@mui/material/Typography";
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { TransactionType } from "../types/transaction-type";
+import { ListItemIcon } from "@mui/material";
 
 type TransactionProps = {
     transaction: TransactionType;
@@ -20,9 +21,9 @@ function TransactionItem({transaction}: TransactionProps) {
             //TODO: make it more presentable
             // sx={{background: item.amount > 0 ?"lightgreen" : "default"}}
             >
-          <ListItemAvatar>
+          <ListItemIcon>
             <ChatBubbleOutlineIcon/>
-          </ListItemAvatar>
+          </ListItemIcon>
           <ListItemText
             primary={transaction.categoryId}
             secondary={
