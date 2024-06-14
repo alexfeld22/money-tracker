@@ -10,6 +10,13 @@ export interface ITransaction   {
     amount: number,
     walletId: string,
     date: string, // stringified date
+    day: string
     // paymentDistributionCurrent?: PaymentDistribution[]
     // paymentDistributionDesired?: PaymentDistribution[]
+  }
+
+  export interface ITransactionGroup {
+    period: string,
+    amountTotal: number,
+    transactions: ITransaction[]
   }

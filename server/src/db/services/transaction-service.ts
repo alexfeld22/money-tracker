@@ -1,10 +1,20 @@
-import { ITransaction } from "./../../types/transaction";
-import { TransactionModel } from "../models/transaction-model";
+import { TransactionModel } from "./../models/transaction-model";
+import { ITransaction, ITransactionGroup } from "./../../types/transaction";
+import moment from "moment";
+import { func } from "joi";
 
 export const transactionService = {
   getTransactions: async () => {
     try {
-      return await TransactionModel.find();
+      const transactions: ITransaction[] = await TransactionModel.find();
+
+      return groupTransactionsBy(transactions, "day");
+      // {
+      //   data: transactions,
+      //   info: {
+      //     count: transactions.length,
+      //   }
+      // }
     } catch (err) {
       console.log("DB Error: ", err);
       return null;
@@ -12,7 +22,7 @@ export const transactionService = {
   },
   getTransactionById: async (id: string) => {
     try {
-      return await TransactionModel.findOne({transactionId: id});
+      return await TransactionModel.findOne({ transactionId: id });
     } catch (err) {
       console.log("DB Error: ", err);
       return null;
@@ -49,7 +59,12 @@ export const transactionService = {
   createTransaction: async (transactionData: ITransaction) => {
     try {
       const transactionId = crypto.randomUUID();
-      const transaction = new TransactionModel({...transactionData, transactionId: transactionId});
+      const transactionDay = moment(transactionData.date).format("YYYY-MM-DD");
+      const transaction = new TransactionModel({
+        ...transactionData,
+        transactionId: transactionId,
+        day: transactionDay,
+      });
       const result = await transaction.save();
       return result;
     } catch (err) {
@@ -71,3 +86,27 @@ export const transactionService = {
     }
   },
 };
+
+function groupTransactionsBy(
+  transactions: ITransaction[],
+  period: keyof ITransaction
+) {
+  const groupedTransactions = transactions.reduce(
+    (acc: { [key: string]: ITransactionGroup }, currentVal: ITransaction) => {
+      const key = String(currentVal[period]);
+      if (!acc[key]) {
+        acc[key] = {
+          period: key,
+          amountTotal: 0,
+          transactions: [],
+        };
+      }
+      acc[key].transactions.push(currentVal);
+      acc[key].amountTotal += currentVal.amount;
+      return acc;
+    },
+    {}
+  );
+
+  return Object.values(groupedTransactions);
+}

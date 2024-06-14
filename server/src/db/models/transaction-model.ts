@@ -15,6 +15,7 @@ const transactionSchema = new mongoose.Schema({
   amount: {type: Number, required: true},
   walletId: {type: String, required: true},
   date: {type: Date, required: true},
+  day: {type: String, required: true}
   // paymentDistributionCurrent?: PaymentDistribution[]
   // paymentDistributionDesired?: PaymentDistribution[]
 });
