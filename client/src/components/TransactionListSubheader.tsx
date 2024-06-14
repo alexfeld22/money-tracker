@@ -1,17 +1,28 @@
 import TransactionItem from "./TransactionItem";
 import { TransactionsDataType } from "../types/transaction-type";
 import ListSubheader from "@mui/material/ListSubheader";
+import { Box, Typography } from "@mui/material";
 
 type TransactionsProps = {
-  data: TransactionsDataType
+  data: TransactionsDataType;
 };
 
 function TransactionSubheader(props: TransactionsProps) {
-  const section = props.data
+  const section = props.data;
   return (
     <li key={section.period}>
       <ul>
-        <ListSubheader color={"primary"}>{section.period}</ListSubheader>
+        <ListSubheader>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            width="100%"
+          >
+            <Typography color="primary">{section.period}</Typography>
+            <Typography color="primary">{section.amountTotal}</Typography>
+          </Box>
+        </ListSubheader>
         {section.transactions.map((item) => (
           <TransactionItem
             key={item.transactionId}

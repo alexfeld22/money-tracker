@@ -10,7 +10,8 @@ export interface ITransaction   {
     amount: number,
     walletId: string,
     date: string, // stringified date
-    day: string
+    day: string, 
+    type: string
     // paymentDistributionCurrent?: PaymentDistribution[]
     // paymentDistributionDesired?: PaymentDistribution[]
   }

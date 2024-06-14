@@ -9,12 +9,6 @@ export const transactionService = {
       const transactions: ITransaction[] = await TransactionModel.find();
 
       return groupTransactionsBy(transactions, "day");
-      // {
-      //   data: transactions,
-      //   info: {
-      //     count: transactions.length,
-      //   }
-      // }
     } catch (err) {
       console.log("DB Error: ", err);
       return null;

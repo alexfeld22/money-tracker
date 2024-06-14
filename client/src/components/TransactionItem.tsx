@@ -12,10 +12,15 @@ type TransactionProps = {
 
 function TransactionItem({transaction}: TransactionProps) {
 
+  const trTypes ={
+    income: 'green',
+    outcome: 'red'
+  }
+
   return (
         <ListItem 
             alignItems="flex-start" 
-            secondaryAction={ transaction.amount} 
+            secondaryAction={ <Typography color={trTypes.income}>{transaction.amount}</Typography>} 
             key={transaction.transactionId}
             //TODO: make it more presentable
             // sx={{background: item.amount > 0 ?"lightgreen" : "default"}}
