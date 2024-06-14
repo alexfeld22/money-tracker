@@ -1,7 +1,7 @@
 import { TransactionModel } from "./../models/transaction-model";
 import { ITransaction, ITransactionGroup } from "./../../types/transaction";
 import moment from "moment";
-import { func } from "joi";
+import {T_TYPES} from "../../consts";
 
 export const transactionService = {
   getTransactions: async () => {
@@ -79,7 +79,59 @@ export const transactionService = {
       return null;
     }
   },
+  getSummaryForPeriod: async (
+    period: string,
+    startDay: string,
+    endDay: string,
+    userId: string
+  ) => {
+    try {
+      const startDate = new Date(startDay);
+      const endDate = new Date(endDay);
+      const result = await TransactionModel.find({
+        userId: userId,
+        date: { $gte: startDate, $lte: endDate },
+      });
+
+      // const plainResult = result.map((doc: Document) => doc.toObject() as ITransaction);
+
+      const incomes = result.filter((t) => t.type === T_TYPES.income.display);
+      const outcomes = result.filter((t) => t.type === T_TYPES.outcome.display);
+      console.log(result);
+      const incomeData = calculateSumByMonth(incomes);
+      const outcomeData = calculateSumByMonth(outcomes);
+      const labels = incomeData.map(m => m.month);
+
+      return {
+        userId: userId,
+        periodTitle: `${moment(startDate).format('MMM')}. ${moment(startDate).format('YYYY')}`,
+        incomes: incomeData,
+        outcomes: outcomeData,
+        labels: labels
+      }
+    } catch (err) {
+      console.log("DB Error: ", err);
+      return null;
+    }
+  },
 };
+
+function calculateSumByMonth(transactions: ITransaction[]) {
+
+  const result = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((m) => {
+    return {
+      month: moment().month(m).format("MMMM"),
+      totalAmount: 0,
+    };
+  });
+
+  transactions.forEach((transaction) => {
+    const transactionMonth = moment(transaction.day).month();
+    result[transactionMonth].totalAmount += transaction.amount;
+  });
+
+  return result;
+}
 
 function groupTransactionsBy(
   transactions: ITransaction[],
