@@ -1,31 +1,22 @@
 import { BarChart } from "@mui/x-charts/BarChart";
+import { useAppSelector } from "../store/hooks";
 
 export default function SimpleBarChart() {
+  const transactionsSummary = useAppSelector((store) => store.transactions.summaryPerPeriod);
 
-  
-  const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-  const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-  const qData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-  const xLabels = [
-    "Page A",
-    "Page B",
-    "Page C",
-    "Page D",
-    "Page E",
-    "Page F",
-    "Page G",
-  ];
+  const incomeData = transactionsSummary.incomes.map(item => item.totalAmount);
+  const outcomeData = transactionsSummary.outcomes.map(item => -item.totalAmount);
+  const labels = transactionsSummary.labels;
 
   return (
     <BarChart
       width={500}
       height={300}
       series={[
-        { data: pData, label: "pv", id: "pvId" },
-        { data: uData, label: "uv", id: "uvId" },
-        { data: qData, label: "qv", id: "qvId" },
+        { data: outcomeData, label: "oucomes", id: "oId" },
+        { data: incomeData, label: "incomes", id: "iId" },
       ]}
-      xAxis={[{ data: xLabels, scaleType: "band" }]}
+      xAxis={[{ data: labels, scaleType: "band" }]}
     />
   );
 }

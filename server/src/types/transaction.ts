@@ -1,7 +1,7 @@
 import { CURRENCIES } from "../consts";
 
 export interface ITransaction   {
-    id: string,
+    transactionId: string,
     categoryId: string,
     currencyCode: CURRENCIES,
     payee: string,
@@ -9,7 +9,7 @@ export interface ITransaction   {
     userId: string,
     amount: number,
     walletId: string,
-    date: string, // stringified date
+    date: Date, // stringified date
     day: string, 
     type: string
     // paymentDistributionCurrent?: PaymentDistribution[]

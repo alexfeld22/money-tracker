@@ -51,6 +51,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+router.get("/:userId/:startDat/:endDay", async (req, res) => {
+  try {
+    const result = await transactionService.getSummaryForPeriod(req.params.startDat, req.params.endDay, req.params.userId);
+    res.status(codes.OK).send(result);
+  } catch (error) {
+    console.error("Service Error: ", error);
+  }
+});
+
+
 router.post("/", async (req, res) => {
   try {
     const transaction = await transactionService.getTransactionById(req.body.id);

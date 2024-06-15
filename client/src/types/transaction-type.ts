@@ -15,15 +15,21 @@ export interface TransactionType {
   // paymentDistributionDesired?: PaymentDistribution[]
 }
 
-export type TransactionsDataType = {
+export type TransactionsPerPeriod = {
   period: string;
   amountTotal: number;
   transactions: TransactionType[];
 };
 
-export type Info = {
-  count: number;
-  pages?: number;
-  next?: string;
-  prev?: null;
+export type TransactionsSummaryPerPeriod = {
+  userId: string,
+  periodTitle: string,
+  incomes: TotalByPeriod[],
+  outcomes: TotalByPeriod[],
+  labels: string[]
 };
+
+type TotalByPeriod = {
+  month: string,
+  totalAmount: number
+}
