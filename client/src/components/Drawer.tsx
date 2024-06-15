@@ -30,7 +30,7 @@ function PermanentDrawerLeft() {
         anchor="left"
       >
         <Toolbar sx={{ flexDirection: "row" }}>
-          <Avatar alt="Remy Sharp" src="" sx={{mr: '10px'}}/>
+          <Avatar alt="User's icon" src="" sx={{mr: '10px'}}/>
           <Typography variant="body1" >Email@gmail.coooooooom</Typography>
         </Toolbar>
         <Divider variant="middle"/>

@@ -113,13 +113,45 @@ export const transactionService = {
       return null;
     }
   },
+  getSummaryByCategory: async (
+    startDay: string,
+    endDay: string,
+    userId: string
+  ) => {
+    try {
+      const startDate = new Date(startDay);
+      const endDate = new Date(endDay);
+      const result = await TransactionModel.find({
+        userId: userId,
+        date: { $gte: startDate, $lte: endDate },
+      });
+
+      // const plainResult = result.map((doc: Document) => doc.toObject() as ITransaction);
+
+      const incomes = result.filter((t) => t.type === T_TYPES.income.display);
+      const outcomes = result.filter((t) => t.type === T_TYPES.outcome.display);
+      console.log(result);
+      const incomeData = groupTransactionsByCategory(incomes);
+      const outcomeData = groupTransactionsByCategory(outcomes);
+
+      return {
+        userId: userId,
+        periodTitle: `${moment(startDate).format('DD MMM YYYY')} - ${moment(endDate).format('DD MMM YYYY')}`,
+        incomes: incomeData,
+        outcomes: outcomeData,
+      }
+    } catch (err) {
+      console.log("DB Error: ", err);
+      return null;
+    }
+  },
 };
 
 function calculateSumByMonth(transactions: ITransaction[]) {
 
   const result = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((m) => {
     return {
-      month: moment().month(m).format("MMMM"),
+      month: moment().month(m).format("MMM"),
       totalAmount: 0,
     };
   });
@@ -132,6 +164,28 @@ function calculateSumByMonth(transactions: ITransaction[]) {
   return result;
 }
 
+function groupTransactionsByCategory(transactions: ITransaction[]) {
+
+  const groupedTransactions = transactions.reduce(
+    (acc: { [key: string]: ITransactionGroup }, currentVal: ITransaction) => {
+      const key = String(currentVal.categoryId);
+      if (!acc[key]) {
+        acc[key] = {
+          groupBy: key,
+          amountTotal: 0,
+          transactions: [],
+        };
+      }
+      acc[key].transactions.push(currentVal);
+      acc[key].amountTotal += currentVal.amount;
+      return acc;
+    },
+    {}
+  );
+
+  return Object.values(groupedTransactions);
+}
+
 function groupTransactionsBy(
   transactions: ITransaction[],
   period: keyof ITransaction
@@ -141,7 +195,7 @@ function groupTransactionsBy(
       const key = String(currentVal[period]);
       if (!acc[key]) {
         acc[key] = {
-          period: key,
+          groupBy: key,
           amountTotal: 0,
           transactions: [],
         };

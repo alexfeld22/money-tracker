@@ -15,8 +15,8 @@ export interface TransactionType {
   // paymentDistributionDesired?: PaymentDistribution[]
 }
 
-export type TransactionsPerPeriod = {
-  period: string;
+export type TransactionsGrouped = {
+  groupBy: string;
   amountTotal: number;
   transactions: TransactionType[];
 };
@@ -27,6 +27,13 @@ export type TransactionsSummaryPerPeriod = {
   incomes: TotalByPeriod[],
   outcomes: TotalByPeriod[],
   labels: string[]
+};
+
+export type TransactionsSummaryPerPeriodByCategory = {
+  userId: string,
+  periodTitle: string,
+  incomes: TransactionsGrouped[],
+  outcomes: TransactionsGrouped[],
 };
 
 type TotalByPeriod = {

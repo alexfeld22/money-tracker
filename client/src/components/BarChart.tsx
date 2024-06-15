@@ -10,7 +10,7 @@ export default function SimpleBarChart() {
 
   return (
     <BarChart
-      width={500}
+      width={800}
       height={300}
       series={[
         { data: outcomeData, label: "oucomes", id: "oId" },
