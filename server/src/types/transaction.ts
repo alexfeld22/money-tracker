@@ -17,7 +17,7 @@ export interface ITransaction   {
   }
 
   export interface ITransactionGroup {
-    period: string,
+    groupBy: string,
     amountTotal: number,
     transactions: ITransaction[]
   }

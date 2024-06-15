@@ -1,16 +1,16 @@
 import TransactionItem from "./TransactionItem";
-import { TransactionsDataType } from "../types/transaction-type";
+import {TransactionsGrouped } from "../types/transaction-type";
 import ListSubheader from "@mui/material/ListSubheader";
 import { Box, Typography } from "@mui/material";
 
 type TransactionsProps = {
-  data: TransactionsDataType;
+  data: TransactionsGrouped;
 };
 
 function TransactionSubheader(props: TransactionsProps) {
   const section = props.data;
   return (
-    <li key={section.period}>
+    <li key={section.groupBy}>
       <ul>
         <ListSubheader>
           <Box
@@ -19,7 +19,7 @@ function TransactionSubheader(props: TransactionsProps) {
             alignItems="center"
             width="100%"
           >
-            <Typography color="primary">{section.period}</Typography>
+            <Typography color="primary">{section.groupBy}</Typography>
             <Typography color="primary">{section.amountTotal}</Typography>
           </Box>
         </ListSubheader>

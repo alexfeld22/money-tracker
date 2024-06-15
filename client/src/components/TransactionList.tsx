@@ -15,14 +15,13 @@ function TransactionList() {
         bgcolor: 'background.paper',
         position: 'relative',
         overflow: 'auto',
-        maxHeight: 300,
+        height: '100%',
+        // maxHeight: 300,
         '& ul': { padding: 1 },
       }}
       subheader={<li />}
     >
-      {TRANSACTIONS2.data.map(item => <TransactionSubheader key={item.period} data={item}/>)}
-          {/* //TODO: make it more presentable
-          // sx={{background: item.amount > 0 ?"lightgreen" : "default"}} */}
+      {TRANSACTIONS2.data.map(item => <TransactionSubheader key={item.groupBy} data={item}/>)}
     </List>
   );
 }
