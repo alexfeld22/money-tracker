@@ -11,7 +11,7 @@ app.use(express.json());
 
 // Use CORS middleware
 app.use(cors({
-  origin: 'http://localhost:5173' // Allow requests from this origin
+  origin: 'http://localhost:5174' // Allow requests from this origin
 }));
 
 app.use(helmet());

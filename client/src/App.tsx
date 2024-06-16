@@ -15,7 +15,7 @@ import { useEffect } from "react";
 
 const fetchTransactions = async () => {
   try {
-    const response = await fetch("http://localhost:3001/api/transactions");
+    const response = await fetch("http://localhost:3002/api/transactions");
     const data: TransactionsGrouped[] = await response.json();
     return data;
   } catch (err) {
@@ -33,7 +33,7 @@ const fetchTransactionsSummaryPerPeriod = async (
     const userId = "90092e73-13a3-445c-8213-3d6576b2cb2e";
 
     const response = await fetch(
-      `http://localhost:3001/api/transactions/${userId}/${startDay}/${endDay}`
+      `http://localhost:3002/api/transactions/${userId}/${startDay}/${endDay}`
     );
     const data: TransactionsSummaryPerPeriod = await response.json();
     return data;
@@ -53,7 +53,7 @@ const fetchTransactionsPerPeriodByCategory = async (
     const userId = "90092e73-13a3-445c-8213-3d6576b2cb2e";
 
     const response = await fetch(
-      `http://localhost:3001/api/transactions/byCategory/${userId}/${startDay}/${endDay}`
+      `http://localhost:3002/api/transactions/byCategory/${userId}/${startDay}/${endDay}`
     );
     const data: TransactionsSummaryPerPeriodByCategory = await response.json();
     return data;

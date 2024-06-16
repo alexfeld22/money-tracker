@@ -13,8 +13,8 @@ export default function SimpleBarChart() {
       width={800}
       height={300}
       series={[
-        { data: outcomeData, label: "oucomes", id: "oId" },
         { data: incomeData, label: "incomes", id: "iId" },
+        { data: outcomeData, label: "oucomes", id: "oId" },
       ]}
       xAxis={[{ data: labels, scaleType: "band" }]}
     />
