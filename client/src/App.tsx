@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { setTheme, setTransactionsData, setTransactionsPerPeriodByCategory, setTransactionsSummaryPerPeriod } from "./store/slices";
 import { TransactionsGrouped, TransactionsSummaryPerPeriod, TransactionsSummaryPerPeriodByCategory } from "./types/transaction-type";
 import { useEffect } from "react";
+import TransactionForm from "./components/TransactionView";
 
 const fetchTransactions = async () => {
   try {
@@ -130,12 +131,14 @@ function App() {
     dispatch(setTheme());
   }
 
+  const transactions = useAppSelector((store) => store.transactions.data);
+  const currentTransaction = transactions[0]?.transactions[0];
+
   const transactionsSummary = useAppSelector((store) => store.transactions.summaryPerPeriodbyCategory);
 
   const dataIncomesByCategory = transactionsSummary.incomes.map((item) => {
     return { value: item.amountTotal, label: item.groupBy };
   });
-
   
   const dataOutcomesByCategory = transactionsSummary.outcomes.map((item) => {
     return { value: item.amountTotal, label: item.groupBy };
@@ -155,6 +158,9 @@ function App() {
       <Box>
         <TrahsactionList />
       </Box>
+      {/* <Box>
+        <TransactionForm transaction={currentTransaction}/>
+      </Box> */}
       <Box>
         <SimpleBarChart />
         <PieChartWithCenterLabel title="Incomes" data={dataIncomesByCategory} size={pieChartSize}/>
